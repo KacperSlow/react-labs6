@@ -1,16 +1,44 @@
 import React from 'react'
-function Employee(props){
-    return(
+class Employee extends React.Component {
+    constructor(props) {
+		super(props);
+		this.state = {
+            dele: false
+        };        
+    }
+
+    handleDelete =(e,id) =>{
+        this.setState({dele: true})
+        fetch('http://localhost:3000/employees/'+id, {
+            method: 'DELETE'
+            })
+            .then(response => {response.json()})
+        this.setState({dele: false})
+    }
+    render(){
+       return(
         <div>
-            <div style={{border:'2px dotted Green', padding:'3px'}}>
-                <p>Name: {props.data.name}</p>
-                <p>Age: {props.data.age}</p>
-                <p>Company: {props.data.company}</p>
-                <p>Active: {props.data.isActive.toString()}</p>
-                <p>email: {props.data.email}</p>          
-            </div>
-            <br />
-        </div>        
-    )
+            {
+                this.props.employees.map(employee => {
+                return (
+                        <div key={employee.id}>
+                            <div style={{border:'2px dotted Green', padding:'3px'}}>
+                                <p>Id : {employee.id}</p>
+                                <p>Name: {employee.name}</p>                
+                                <p>Age: {employee.age}</p>                
+                                <p>Company: {employee.company}</p>
+                                <p>Email: {employee.email}</p>
+                                <p>isActive: {employee.isActive.toString()}</p>           
+                            </div>
+                            <br/>
+                        </div>
+                    )
+                })
+            }
+        </div>
+       )
+        
+        
+    }
 }
 export default Employee

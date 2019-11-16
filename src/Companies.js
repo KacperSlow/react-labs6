@@ -1,6 +1,6 @@
 import React from 'react'
-import EmployeeList from './EmployeeList'
 import AddEmployee from './AddEmployee'
+import Employee from './Employee'
 class Companies extends React.Component {
 
 	constructor(props) {
@@ -33,8 +33,7 @@ class Companies extends React.Component {
           name: e.target.name.value,
           company: e.target.company.value,
           email: e.target.email.value
-        }
-        newEmployee.id =(Math.floor(Math.random() * (100000000)) + 1).toString();           
+        }         
         fetch('http://localhost:3000/employees', {
         method: 'POST', 
         headers: {
@@ -53,6 +52,10 @@ class Companies extends React.Component {
         })
     }
 
+    handleDelete = (e) => {
+        console.log(e.target.name.value)
+    }
+
     render() {
         if (this.state.isLoading) {
             return <p>Loading ...</p>;
@@ -62,14 +65,14 @@ class Companies extends React.Component {
                 <div>
                     <button onClick={this.handleAddEmployee}>Add Employee</button>
                     <AddEmployee handleAddEmployee={this.handleAddEmployee} onSubmit={this.onSubmit} save={this.state.save}/>
-                    <EmployeeList employee={this.state.employees}/>
+                    <Employee employees={this.state.employees}/>
                 </div>
             )
         }
 		return (
             <div>
                 <button onClick={this.handleAddEmployee}>Add Employee</button>
-                <EmployeeList employee={this.state.employees}/>
+                <Employee employees={this.state.employees}/>
             </div>			
 		)
 	}

@@ -12,6 +12,7 @@ class AddEmployee extends React.Component {
             )
         }      
     return(
+        <div>
         <div style={{border:'2px solid black', padding:'3px'}}>
             <form onSubmit={(e) => this.props.onSubmit(e)} >
                 <p>ID: <input disabled></input></p>
@@ -24,6 +25,8 @@ class AddEmployee extends React.Component {
                 <button>Add</button>
             </form>            
             <br />
+        </div>
+        <br />
         </div>
     )
     }
