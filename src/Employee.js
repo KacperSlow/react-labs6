@@ -7,7 +7,7 @@ function Employee(props){
                 <p>Age: {props.data.age}</p>
                 <p>Company: {props.data.company}</p>
                 <p>Active: {props.data.isActive.toString()}</p>
-                <p>email: {props.data.email}</p>                
+                <p>email: {props.data.email}</p>          
             </div>
             <br />
         </div>        
