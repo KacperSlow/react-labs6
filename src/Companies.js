@@ -1,6 +1,6 @@
 import React from 'react'
-import Employee from './Employee'
 import AddEmployee from './AddEmployee'
+import Employee from './Employee'
 class Companies extends React.Component {
 
     constructor(props) {
@@ -9,7 +9,8 @@ class Companies extends React.Component {
             employees: [],
             isLoading: false,
             add: false,
-            save: false
+            save: false,
+            delete: false
         };        
     }
 
@@ -21,11 +22,10 @@ class Companies extends React.Component {
         this.setState({ employees: response, isLoading: false  })
         })
     }
-
-    
     handleAddEmployee = (e) =>{
         this.setState({ add: !this.state.add});
     }
+
     onSubmit = (e) => {
         e.preventDefault();
         const newEmployee = {
@@ -52,8 +52,25 @@ class Companies extends React.Component {
             this.setState({ employees: response, isLoading: false, add:false, save: false })
         })
     }
+
+    handleDeleteEmployee = (e,id) => {
+        fetch('http://localhost:3000/employees/'+id, {
+        method: 'DELETE'
+        })
+        .then(response => {response.json()})
+
+        
+        this.setState({delete: true})
+        fetch('http://localhost:3000/employees')
+        .then(response => response.json())
+        .then(response => {
+            this.setState({ employees: response, isLoading: false, add:false, save: false, delete: false })
+        })
+        
+    }
+
     render() {
-        if (this.state.isLoading){
+        if (this.state.isLoading) {
             return <p>Loading ...</p>;
         }
         if(this.state.add || this.state.save) {
@@ -61,16 +78,14 @@ class Companies extends React.Component {
                 <div>
                     <button onClick={this.handleAddEmployee}>Add Employee</button>
                     <AddEmployee handleAddEmployee={this.handleAddEmployee} onSubmit={this.onSubmit} save={this.state.save}/>
-                    <Employee employees={this.state.employees}/>
+                    <Employee employees={this.state.employees} handleDeleteEmployee={this.handleDeleteEmployee} delete={this.delete}/>
                 </div>
             )
         }
-
-
         return (
             <div>
-                <button onClick={this.handleAddEmployee}>Add Employee</button>             
-                <Employee employees={this.state.employees} />
+                <button onClick={this.handleAddEmployee}>Add Employee</button>
+                <Employee employees={this.state.employees} handleDeleteEmployee={this.handleDeleteEmployee} delete={this.state.delete}/>
             </div>          
         )
     }
