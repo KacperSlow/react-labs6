@@ -10,6 +10,7 @@ class Companies extends React.Component {
             isLoading: false,
             add: false,
             save: false,
+            delete: false
         };        
     }
 
@@ -28,7 +29,7 @@ class Companies extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
         const newEmployee = {
-          isActive: e.target.active.value == "on" ? true : false,
+          isActive: e.target.active.checked,
           age: e.target.age.value,
           name: e.target.name.value,
           company: e.target.company.value,
@@ -52,8 +53,15 @@ class Companies extends React.Component {
         })
     }
 
-    handleDelete = (e) => {
-        console.log(e.target.name.value)
+    handleDeleteEmployee = (e,id) => {
+        e.preventDefault();
+        this.setState({delete: true})
+        fetch('http://localhost:3000/employees/'+id, {
+        method: 'DELETE'
+        })
+        .then(response => {response.json()})
+        this.setState({delete: false})
+        
     }
 
     render() {
@@ -65,14 +73,14 @@ class Companies extends React.Component {
                 <div>
                     <button onClick={this.handleAddEmployee}>Add Employee</button>
                     <AddEmployee handleAddEmployee={this.handleAddEmployee} onSubmit={this.onSubmit} save={this.state.save}/>
-                    <Employee employees={this.state.employees}/>
+                    <Employee employees={this.state.employees} handleDeleteEmployee={this.handleDeleteEmployee} delete={this.delete}/>
                 </div>
             )
         }
 		return (
             <div>
                 <button onClick={this.handleAddEmployee}>Add Employee</button>
-                <Employee employees={this.state.employees}/>
+                <Employee employees={this.state.employees} handleDeleteEmployee={this.handleDeleteEmployee} delete={this.state.delete}/>
             </div>			
 		)
 	}
