@@ -151,54 +151,6 @@
       "name": "Rosanna Newman",
       "company": "EXIAND",
       "email": "rosannanewman@exiand.com"
-    },
-    {
-      "isActive": true,
-      "age": "",
-      "name": "ss",
-      "company": "",
-      "email": "",
-      "id": "JNhkydH"
-    },
-    {
-      "isActive": true,
-      "age": "",
-      "name": "wwa",
-      "company": "",
-      "email": "",
-      "id": "G4jzZQQ"
-    },
-    {
-      "isActive": false,
-      "age": "",
-      "name": "",
-      "company": "",
-      "email": "",
-      "id": "5RTHuoj"
-    },
-    {
-      "isActive": true,
-      "age": "",
-      "name": "",
-      "company": "",
-      "email": "",
-      "id": "ZoqtZZw"
-    },
-    {
-      "isActive": false,
-      "age": "",
-      "name": "",
-      "company": "",
-      "email": "",
-      "id": "iZ4wzNy"
-    },
-    {
-      "isActive": true,
-      "age": "2",
-      "name": "",
-      "company": "",
-      "email": "",
-      "id": "KjJNv8m"
     }
   ]
 }
