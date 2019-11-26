@@ -1,10 +1,13 @@
 import React from 'react'
 class Employee extends React.Component {
     constructor(props) {
-        super(props);     
+        super(props);
+        this.state = {
+            delete : false
+        }  
     }
     render(){
-        if(this.props.delete){
+        if(this.state.delete){
             return (
                 <div >
                     <div style={{border:'2px dotted Green', padding:'3px'}}>
@@ -15,26 +18,19 @@ class Employee extends React.Component {
             )
         }
        return(
-        <div>
-            {
-                this.props.employees.map((employee) => {
-                return (
-                        <div key={employee.id}>
-                            <div style={{border:'2px dotted Green', padding:'3px'}}>
-                                <p>Id : {employee.id}</p>
-                                <p>Name: {employee.name}</p>                
-                                <p>Age: {employee.age}</p>                
-                                <p>Company: {employee.company}</p>
-                                <p>Email: {employee.email}</p>
-                                <p>Active: {employee.isActive.toString()}</p>
-                                <button onClick={(e) => this.props.handleDeleteEmployee(e,employee.id)}>Delete</button>      
-                            </div>
-                            <br/>
-                        </div>
-                    )
-                })
-            }
-        </div>
+            <div>
+                <div style={{border:'2px dotted Green', padding:'3px'}}>
+                    <p>Id : {this.props.employee.id}</p>
+                    <p>Name: {this.props.employee.name}</p>                
+                    <p>Age: {this.props.employee.age}</p>                
+                    <p>Company: {this.props.employee.company}</p>
+                    <p>Email: {this.props.employee.email}</p>
+                    <p>Active: {this.props.employee.isActive.toString()}</p>
+                    <button onClick={(e) => {this.props.handleDeleteEmployee(e,this.props.employee.id); this.setState({delete:true})}}>Delete</button>      
+                </div>
+                <br/>
+            </div>                 
+                
        )        
     }
 }

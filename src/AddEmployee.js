@@ -2,7 +2,33 @@ import React from 'react'
 class AddEmployee extends React.Component {
     constructor(props) {
         super(props);
+        this.state={
+            save: false
+        }
       }
+
+      onSubmit =(e) =>{
+        e.preventDefault();
+        const newEmployee = {
+          isActive: e.target.active.checked,
+          age: e.target.age.value,
+          name: e.target.name.value,
+          company: e.target.company.value,
+          email: e.target.email.value
+        }         
+        fetch('http://localhost:3000/employees', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(newEmployee)
+        })
+        .then(response => {response.json()})       
+            
+        this.setState({save: true})        
+      }
+
     render(){  
         if(this.props.save){
             return(

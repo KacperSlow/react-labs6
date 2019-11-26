@@ -9,25 +9,27 @@ class Companies extends React.Component {
             employees: [],
             isLoading: false,
             add: false,
-            save: false,
-            delete: false
+            save: false
         };        
     }
-
-    componentDidMount() {
-        this.setState({ isLoading: true })
-        fetch('http://localhost:3000/employees')
-        .then(response => response.json())
-        .then(response => {
-        this.setState({ employees: response, isLoading: false  })
-        })
+    fetchData()
+    {
+            this.setState({ isLoading: true })
+            fetch('http://localhost:3000/employees')
+            .then(response => response.json())
+            .then(response => {
+            this.setState({ employees: response, isLoading: false , save: false, delete: false, add: false })
+            })     
     }
     handleAddEmployee = (e) =>{
         this.setState({ add: !this.state.add});
     }
-
+    componentDidMount() {
+        this.fetchData();
+    }
     onSubmit = (e) => {
-        e.preventDefault();
+        
+        this.setState({save: true})
         const newEmployee = {
           isActive: e.target.active.checked,
           age: e.target.age.value,
@@ -44,31 +46,21 @@ class Companies extends React.Component {
         body: JSON.stringify(newEmployee)
         })
         .then(response => {response.json()})       
-            
-        this.setState({save: true}),
-        fetch('http://localhost:3000/employees')
-        .then(response => response.json())
-        .then(response => {
-            this.setState({ employees: response, isLoading: false, add:false, save: false })
-        })
+        .then(() => {
+            this.fetchData();
+        });        
+       
     }
 
-    handleDeleteEmployee = (e,id) => {
+    handleDeleteEmployee = (e,id) => {        
         fetch('http://localhost:3000/employees/'+id, {
         method: 'DELETE'
         })
         .then(response => {response.json()})
-
-        
-        this.setState({delete: true})
-        fetch('http://localhost:3000/employees')
-        .then(response => response.json())
-        .then(response => {
-            this.setState({ employees: response, isLoading: false, add:false, save: false, delete: false })
-        })
-        
+        .then(() => {
+            this.fetchData();
+        });
     }
-
     render() {
         if (this.state.isLoading) {
             return <p>Loading ...</p>;
@@ -78,14 +70,15 @@ class Companies extends React.Component {
                 <div>
                     <button onClick={this.handleAddEmployee}>Add Employee</button>
                     <AddEmployee handleAddEmployee={this.handleAddEmployee} onSubmit={this.onSubmit} save={this.state.save}/>
-                    <Employee employees={this.state.employees} handleDeleteEmployee={this.handleDeleteEmployee} delete={this.delete}/>
+                    <Employee employees={this.state.employees} handleDeleteEmployee={this.handleDeleteEmployee}/>
                 </div>
             )
         }
         return (
             <div>
                 <button onClick={this.handleAddEmployee}>Add Employee</button>
-                <Employee employees={this.state.employees} handleDeleteEmployee={this.handleDeleteEmployee} delete={this.state.delete}/>
+                {this.state.employees.map(employee =>
+                    <Employee key={employee.id} employee={employee} handleDeleteEmployee={this.handleDeleteEmployee}/>)}
             </div>          
         )
     }
