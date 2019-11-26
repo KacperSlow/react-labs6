@@ -1,11 +1,26 @@
 import React from 'react'
-import Employees from './Companies'
+
+
+import{
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom"
+
+import PageEmployeeList from './PageEmployeeList'
+import PageEmployee from './PageEmployee'
 
 const App = () => (
-  <div>
-    <h1>Minimal React</h1>
-    <Employees />
-  </div> 
+  <Router>
+    <Switch>
+      <Route exact path="/">
+        <PageEmployeeList></PageEmployeeList>
+      </Route>
+      <Route exact path="/new">
+        <PageEmployee></PageEmployee>
+      </Route>
+    </Switch>
+  </Router>
 )
-
 export default App
