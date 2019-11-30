@@ -29,8 +29,7 @@ class Employee extends React.Component {
                     <button onClick={(e) => {this.props.handleDeleteEmployee(e,this.props.employee.id); this.setState({delete:true})}}>Delete</button>      
                 </div>
                 <br/>
-            </div>                 
-                
+            </div>
        )        
     }
 }

@@ -15,12 +15,16 @@ const App = () => (
   <Router>
     <Switch>
       <Route exact path="/">
+        
         <PageEmployeeList></PageEmployeeList>
+        <Link to="/new">
+          <button>Create new Employee</button>
+        </Link>
       </Route>
       <Route exact path="/new">
-        <PageEmployee></PageEmployee>
+        <PageEmployee ></PageEmployee>
       </Route>
     </Switch>
   </Router>
-)
+) 
 export default App
