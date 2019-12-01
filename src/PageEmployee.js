@@ -1,16 +1,20 @@
 import React from 'react'
 import AddEmployee from './AddEmployee'
+import { 
+    BrowserRouter as Router,
+    withRouter
+} from "react-router-dom";
 class PageEmployee extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            employees: [],
-            save: false
+            employees: []
         };       
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);  
     }
     onSubmit = (e) => {
-        this.setState=({save:true})
+        e.preventDefault();
         const newEmployee = {
           isActive: e.target.active.checked,
           age: e.target.age.value,
@@ -22,19 +26,25 @@ class PageEmployee extends React.Component {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
         },
         body: JSON.stringify(newEmployee)
-        })
-        .then(response => {response.json()})       
+        }).then(()=>
+        {
+         
+         this.props.history.push('/');
+        
+        });   
+    }
+    handleCancel() {
+        this.props.history.push("/");
     }
     render(){
         return(
             <div>
-                <AddEmployee onSubmit={this.onSubmit} save = {this.state.save}/>
+                <AddEmployee onSubmit={this.onSubmit} handleCancel={this.handleCancel}/>
             </div>
         )
     }
     
 }
-export default PageEmployee
+export default withRouter(PageEmployee)

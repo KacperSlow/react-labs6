@@ -16,7 +16,7 @@ class Companies extends React.Component {
             fetch('http://localhost:3000/employees')
             .then(response => response.json())
             .then(response => {
-            this.setState({ employees: response, isLoading: false , save: false, delete: false, add: false })
+            this.setState({ employees: response, isLoading: false})
             })     
     }
     componentDidMount() {
